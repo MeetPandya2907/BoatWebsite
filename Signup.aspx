@@ -31,7 +31,7 @@
 
         <!-- Signup Section -->
         <div class="auth-container">
-            <div class="auth-box signup-box">
+            <div class="auth-box">
                 <div class="auth-header">
                     <h2>Create Your Account 🎉</h2>
                     <p>Join the boAthead community today!</p>

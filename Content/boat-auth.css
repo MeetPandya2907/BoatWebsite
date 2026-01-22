@@ -14,10 +14,10 @@
     background: white;
 }
 
-.signup-box {
-    overflow-y: auto;
-    max-height: calc(100vh - 120px);
-}
+/*.signup-box {*/
+/*    overflow-y: auto;*/
+/*    max-height: calc(100vh - 120px);*/
+/*}*/
 
 .back-link {
     color: #1a1a1a !important;
