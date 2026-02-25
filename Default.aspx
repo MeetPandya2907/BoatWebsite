@@ -10,7 +10,7 @@
 </head>
 <body>
 <form id="form1" runat="server">
-    <span class="cart-count"><%: cartCount %></span>
+    
 <!-- ===== TOP PROMO BAR ===== -->
 <div class="top-promo-bar">
     <span>🎉 Get Extra 5% Off On Prepaid Orders | Code: <strong>BOATHEAD</strong></span>
@@ -197,8 +197,7 @@
                 <div class="pcard-body">
                     <p class="pname"><%# Eval("ProductName") %></p>
                     <div class="prating">
-                        <%# GetStars(Convert.ToDecimal(Eval("Rating"))) %>
-                        <span><%# Eval("Rating") %> (<%# GetReviewCount(Convert.ToInt32(Eval("ReviewCount"))) %>)</span>
+                    
                     </div>
                     <div class="ppricing">
                         <span class="pprice">₹<%# String.Format("{0:N0}", Eval("Price")) %></span>
@@ -413,8 +412,7 @@
                 <div class="pcard-body">
                     <p class="pname"><%# Eval("ProductName") %></p>
                     <div class="prating">
-                        <%# GetStars(Convert.ToDecimal(Eval("Rating"))) %>
-                        <span><%# Eval("Rating") %> (<%# GetReviewCount(Convert.ToInt32(Eval("ReviewCount"))) %>)</span>
+                       
                     </div>
                     <div class="ppricing">
                         <span class="pprice">₹<%# String.Format("{0:N0}", Eval("Price")) %></span>
@@ -549,8 +547,7 @@
                 <div class="pcard-body">
                     <p class="pname"><%# Eval("ProductName") %></p>
                     <div class="prating">
-                        <%# GetStars(Convert.ToDecimal(Eval("Rating"))) %>
-                        <span><%# Eval("Rating") %></span>
+                       
                     </div>
                     <div class="ppricing">
                         <span class="pprice">₹<%# String.Format("{0:N0}", Eval("Price")) %></span>

@@ -8,12 +8,10 @@ namespace BoatWebsite
 {
     public partial class Default : System.Web.UI.Page
     {
-        // Public property so ASPX can use it
         public int cartCount = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Handle logout
             if (Request.QueryString["logout"] == "1")
             {
                 Session.Clear();
@@ -22,7 +20,6 @@ namespace BoatWebsite
                 return;
             }
 
-            // Get cart count
             if (Session["UserID"] != null)
             {
                 cartCount = GetCartCount(int.Parse(Session["UserID"].ToString()));
@@ -44,12 +41,9 @@ namespace BoatWebsite
                 using (SqlConnection conn = new SqlConnection(connStr))
                 {
                     conn.Open();
-                    // Featured = Sale Is Live section
                     string q = @"SELECT TOP 6 ProductID, ProductName, Price, OldPrice, 
                                         ImageURL, Rating, ReviewCount, Discount, IsBestseller
-                                 FROM Products 
-                                 WHERE IsActive=1 AND IsFeatured=1 
-                                 ORDER BY Discount DESC";
+                                 FROM Products WHERE IsActive=1 AND IsFeatured=1 ORDER BY Discount DESC";
                     using (SqlCommand cmd = new SqlCommand(q, conn))
                     {
                         DataTable dt = new DataTable();
@@ -59,7 +53,7 @@ namespace BoatWebsite
                     }
                 }
             }
-            catch { /* handle DB errors silently */ }
+            catch { }
         }
 
         private void LoadBestsellers()
@@ -72,9 +66,7 @@ namespace BoatWebsite
                     conn.Open();
                     string q = @"SELECT TOP 6 ProductID, ProductName, Price, OldPrice,
                                         ImageURL, Rating, ReviewCount, Discount
-                                 FROM Products 
-                                 WHERE IsActive=1 AND IsBestseller=1 
-                                 ORDER BY ReviewCount DESC";
+                                 FROM Products WHERE IsActive=1 AND IsBestseller=1 ORDER BY ReviewCount DESC";
                     using (SqlCommand cmd = new SqlCommand(q, conn))
                     {
                         DataTable dt = new DataTable();
@@ -97,9 +89,7 @@ namespace BoatWebsite
                     conn.Open();
                     string q = @"SELECT TOP 6 ProductID, ProductName, Price, OldPrice,
                                         ImageURL, Rating, Discount, IsNewLaunch
-                                 FROM Products 
-                                 WHERE IsActive=1 
-                                 ORDER BY CreatedDate DESC";
+                                 FROM Products WHERE IsActive=1 ORDER BY CreatedDate DESC";
                     using (SqlCommand cmd = new SqlCommand(q, conn))
                     {
                         DataTable dt = new DataTable();
@@ -112,17 +102,27 @@ namespace BoatWebsite
             catch { }
         }
 
-        // Helper to build star string — accessible from ASPX
-        public string GetStars(decimal rating)
+        // PUBLIC methods — called from Repeater via ((BoatWebsite.Default)Page).MethodName()
+        public string GetStars(object ratingObj)
         {
-            int full = (int)Math.Floor(rating);
-            int empty = 5 - full;
-            return new string('★', full) + new string('☆', empty);
+            try
+            {
+                decimal rating = Convert.ToDecimal(ratingObj);
+                int full = (int)Math.Floor(rating);
+                int empty = 5 - full;
+                return new string('★', full) + new string('☆', empty);
+            }
+            catch { return "★★★★☆"; }
         }
 
-        public string GetReviewCount(int count)
+        public string GetReviewCount(object countObj)
         {
-            return count >= 1000 ? (count / 1000.0).ToString("F1") + "K" : count.ToString();
+            try
+            {
+                int count = Convert.ToInt32(countObj);
+                return count >= 1000 ? (count / 1000.0).ToString("F1") + "K" : count.ToString();
+            }
+            catch { return "0"; }
         }
 
         private int GetCartCount(int userId)
